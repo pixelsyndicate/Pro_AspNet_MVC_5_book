@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -8,15 +7,35 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles.css" />
     <title>Index</title>
+    <style>
+        .btn a {
+            color: white;
+            text-decoration: none;
+        }
+
+        body {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        @ViewBag.Greeting Hello World (from the view)
-        <p>
-            We're going to have an exciting party. <br/>(To do: sell it better. add pictures or something.)
-        </p>
-        @Html.ActionLink("RSVP Now", "RsvpForm")
-</div>
+    <div class="text-center">
+        <span class="hidden">
+            @ViewBag.Greeting Hello World (from the view)
+        </span>
+
+        <h2>
+            We're going to have an exciting party!
+        </h2>
+        <h3>And you are invited</h3>
+        <div class="btn btn-success">
+            @Html.ActionLink("RSVP Now", "RsvpForm")
+        </div>
+    </div>
 </body>
 </html>

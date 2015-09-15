@@ -1,27 +1,56 @@
 ﻿@model firstMvcApp.Models.GuestResponse
-
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles.css" />
     <title>Thanks</title>
+    <style>
+        .btn a {
+            color: white;
+            text-decoration: none;
+        }
+
+        body {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
-<body>
-<div>
-    <h1>Thank you, @Model.Name!</h1>
-    @if (Model.WillAttend == true)
-    {
-        @:It's great you are coming. the drinks are already in the fridge!
-    }
-    else
-    {
-        @:Sorry to hear you can't make it, but thanks for letting us know.
-    }
-</div>
+<body class="container">
+    <div class="text-center">
+        @{
+            // demo something quick to send email message
+            try
+            {
+                WebMail.SmtpServer = "smtp.asdf.com";
+                WebMail.SmtpPort = 587;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "mySmtpUserName";
+                WebMail.Password = "mySmtpPassword";
+                WebMail.From = "rsvps@asdf.com";
+                WebMail.Send("party-host@asdf.com", "RSVP Notification", Model.Name + " is " + ((Model.WillAttend ?? false) ? "" : "not"));
+            }
+            catch (Exception ex)
+            {
+                @:<b>Sorry - we couldn't send the email to confirm your rsvp.</b>
+                }
+        }
+        <h1>Thank you, @Model.Name!</h1>
+        <div class="lead">
+            @if (Model.WillAttend == true)
+            {
+                @:It's great you are coming. the drinks are already in the fridge!
+        }
+            else
+            {
+                @:Sorry to hear you can't make it, but thanks for letting us know.
+        }
+        </div>
+    </div>
 </body>
 </html>
