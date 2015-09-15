@@ -11,8 +11,12 @@
     <title>Index</title>
 </head>
 <body>
-<div>@ViewBag.Greeting Hello World (from the view)
-    <p>We're going to have an exciting party. <br/></p>
-    </div>
+    <div>
+        @ViewBag.Greeting Hello World (from the view)
+        <p>
+            We're going to have an exciting party. <br/>(To do: sell it better. add pictures or something.)
+        </p>
+        @Html.ActionLink("RSVP Now", "RsvpForm")
+</div>
 </body>
 </html>
