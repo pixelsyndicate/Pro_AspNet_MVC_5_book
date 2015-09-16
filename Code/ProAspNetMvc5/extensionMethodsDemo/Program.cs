@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -107,6 +108,27 @@ namespace extensionMethodsDemo
 
 
             Console.ReadKey();
+        }
+
+        static void Test()
+        {
+            Func<DateTime, string> fromAnonMethod = delegate(DateTime dt) { return dt.Date.ToString(); };
+
+            Func<DateTime, string> fromLamda = dt => dt.Date.ToLongDateString();
+
+            // i don't need to express the logic of my delegate in the lambda expression. I could just call a method
+            Product prod = new Product() { Category = " My Cat " };
+            Func<Product, string> trimmedProduct = x => TrimCategory(x);
+            
+        }
+        /// <summary>
+        /// this accepts a product and returns a trimmed category string.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        private static string TrimCategory(Product p)
+        {
+            return p.Category.Trim();
         }
     }
 }

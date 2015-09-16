@@ -42,9 +42,8 @@ namespace firstMvcApp.Controllers
 
         public ActionResult Index3()
         {
-            return View();
+            return View("Index");
         }
-
 
     }
 }
