@@ -1,6 +1,18 @@
 ﻿body {
+    background-color: #f1f1f1;
 }
 
+/* summary validation message styles */
+.validation-summary-valid {
+    display: none;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+/* specific validation message styles */
 .field-validation-error {
     color: #f00;
 }
@@ -9,16 +21,8 @@
     display: none;
 }
 
+/* input validation visuals */
 .input-validation-error {
     border: 1px solid #f00;
     background-color: #fee;
-}
-
-.validation-summary-errors {
-    font-weight: bold;
-    color: #f00;
-}
-
-.validation-summary-valid {
-    display: none;
 }
