@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "extensionMethodsDemo", "ext
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asyncDemo", "asyncDemo\asyncDemo.csproj", "{96F4AC85-B681-4E04-8A85-F99782587D0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EssentialTools.Tests", "EssentialTools.Tests\EssentialTools.Tests.csproj", "{F4A484B2-6661-4685-A238-5E9A9FF75026}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EssentialTools", "EssentialTools\EssentialTools.csproj", "{62042AD3-E035-435E-8F02-D7CC478C43C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{96F4AC85-B681-4E04-8A85-F99782587D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96F4AC85-B681-4E04-8A85-F99782587D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96F4AC85-B681-4E04-8A85-F99782587D0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A484B2-6661-4685-A238-5E9A9FF75026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A484B2-6661-4685-A238-5E9A9FF75026}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A484B2-6661-4685-A238-5E9A9FF75026}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A484B2-6661-4685-A238-5E9A9FF75026}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62042AD3-E035-435E-8F02-D7CC478C43C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62042AD3-E035-435E-8F02-D7CC478C43C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62042AD3-E035-435E-8F02-D7CC478C43C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62042AD3-E035-435E-8F02-D7CC478C43C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
