@@ -9,6 +9,17 @@ namespace EssentialTools.Models
     {
         // this would normally be added via dependency injection, but i skipped that in this demo.
         readonly IDiscountHelper _discounter = new DefaultDiscountHelper();
+
+        public LinqValueCalculator(IDiscountHelper discounter)
+        {
+            _discounter = discounter;
+            // throw new NotImplementedException();
+        }
+
+        public LinqValueCalculator()
+        {
+        }
+
         public decimal ValueProducts(IEnumerable<Product> products)
         {
             return _discounter.ApplyDiscount(products.Sum(p => p.Price));
