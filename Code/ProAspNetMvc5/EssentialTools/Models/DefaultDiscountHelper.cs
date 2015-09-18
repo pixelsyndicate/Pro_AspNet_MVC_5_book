@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
@@ -11,11 +10,6 @@ namespace EssentialTools.Models
         {
             return (totalParam - (10m / 100m * totalParam));
         }
-    }
-
-    public interface IDiscountHelper
-    {
-        decimal ApplyDiscount(decimal totalParam);
     }
 
 

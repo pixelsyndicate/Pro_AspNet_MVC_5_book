@@ -90,7 +90,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DefaultDiscountHelper.cs" />
+    <Compile Include="Models\IDiscountHelper.cs" />
     <Compile Include="Models\LinqValueCalculator.cs" />
+    <Compile Include="Models\MinimumDiscountHelper.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
