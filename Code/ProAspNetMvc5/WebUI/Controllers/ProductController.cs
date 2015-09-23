@@ -10,17 +10,27 @@ namespace SportsStore.WebUI.Controllers
 {
     public class ProductController : Controller
     {
-        private IProductRepository _repo;
+        private readonly IProductRepository _repo;
+        public int PageSize = 4;
 
         public ProductController(IProductRepository productRepo)
         {
             _repo = productRepo;
         }
 
-        public ViewResult List()
+        public ViewResult List(int page = 1)
         {
-            return View(_repo.Products);
+            IEnumerable<Product> products = _repo.Products
+                .OrderBy(p => p.ProductID)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize);
+            return View(products);
         }
+
+        //public ViewResult List()
+        //{
+        //    return View(_repo.Products);
+        //}
 
     }
 }
