@@ -19,7 +19,7 @@ namespace SportsStore.WebUI.Controllers
             _repo = productRepo;
         }
 
-        public ViewResult List(int requestedPage = 1)
+        public ViewResult List(string category, int page = 1)
         {
             //IEnumerable<Product> products = _repo.Products
             //    .OrderBy(p => p.ProductID)
@@ -28,8 +28,16 @@ namespace SportsStore.WebUI.Controllers
 
             ProductsListViewModel model = new ProductsListViewModel
             {
-                Products = _repo.Products.OrderBy(p => p.ProductID).Skip((requestedPage - 1) * PageSize).Take(PageSize),
-                PagingInfo = new PagingInfo { CurrentPage = requestedPage, ItemsPerPage = PageSize, TotalItems = _repo.Products.Count() }
+                Products = _repo.Products
+                .Where(p => category == null || p.Category == category) // category filter only used if parm category==null
+                .OrderBy(p => p.ProductID)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize),
+                PagingInfo = new PagingInfo { CurrentPage = page, 
+                    ItemsPerPage = PageSize, 
+                    TotalItems = _repo.Products.Count() 
+                },
+                CurrentCategory = category
             };
 
             return View(model);
