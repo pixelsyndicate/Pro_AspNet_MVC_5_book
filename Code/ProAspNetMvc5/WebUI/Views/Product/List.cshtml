@@ -17,6 +17,11 @@
         </div>*@
 }
 
-<div>
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x =>
+        Url.Action("List", new { page = x, category = Model.CurrentCategory }))
 </div>
+
+@*<div> this was used before i created routes for /category and /Page#
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+    </div>*@

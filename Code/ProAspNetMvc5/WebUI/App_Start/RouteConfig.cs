@@ -10,9 +10,13 @@ namespace SportsStore.WebUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             // the routing system processes routes in the order they are listed. 
+            // .MapRoute(name, 'expectedpaths',new {object defaults}, new {object constraints}
+            // routing handles incoming requests and helps format URL links for you.
+
 
             // - / = lists first page of products from all categories
-            routes.MapRoute(null, "", // no expected path
+            routes.MapRoute(null,
+                "", // no expected path
                 new
                 {
                     // object defaults
@@ -23,28 +27,23 @@ namespace SportsStore.WebUI
                 });
 
             // - /Page2 = lists the specified page (Page2) showing items from all categories
+
             routes.MapRoute(null,
-                "Page{page}", // expected path /Page#
+                "Page{page}",
                 new
                 {
-                    // object defaults
                     controller = "Product",
                     action = "List",
                     category = (string)null
                 },
-                new
-                {
-                    // object constraints
-                    page = @"/d+"
-                });
+                new { page = @"\d+" });
 
 
             // - /Soccer = lists the first page of items from a specific category (Soccer)    
             routes.MapRoute(null,
-                "{category}",// expected path /category
+                "{category}",
                 new
                 {
-                    // object defaults
                     controller = "Product",
                     action = "List",
                     page = 1
@@ -53,22 +52,18 @@ namespace SportsStore.WebUI
 
             // - /Soccer/Page2 = shows the specified page (Page2) of items from the specified category (Soccer)
             routes.MapRoute(null,
-                "{category}/Page{page}", // expected composited path /category/Page#
+                "{category}/Page{page}",
                 new
                 {
-                    // object defaults
                     controller = "Products",
                     action = "List"
                 },
-                new
-                {
-                    // object constraints - 
-                    page = @"/d+"
-                });
+                new { page = @"\d+" }
+                );
 
 
             // catch all
-            routes.MapRoute(null, "{controller}/{action}");// expected only controller/action
+            routes.MapRoute(null, "{controller}/{action}");// expected only controller/action, but allows for ?querystringkey=querystringval
 
             // this is the original, which i used when i was passing pageid through querystring
             // no longer valid since i have no controllers with optional parms for list
