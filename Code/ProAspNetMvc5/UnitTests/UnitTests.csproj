@@ -103,6 +103,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CartTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
