@@ -5,14 +5,14 @@ using SportsStore.Domain.Entities;
 
 namespace SportsStore.Domain.Concrete
 {
-    public class EFProductRepository : IProductRepository
+    public class EfProductRepository : IProductRepository
     {
-        private EFDbContext context = new EFDbContext();
-        public IEnumerable<Product> Products { get { return context.Products; } }
+        private readonly EFDbContext _context = new EFDbContext();
+        public IEnumerable<Product> Products { get { return _context.Products; } }
 
         public Product GetProduct(int productid)
         {
-            return Products.FirstOrDefault(p => p.ProductID == productid);
+            return _context.Products.FirstOrDefault(p => p.ProductID == productid);
         }
     }
 }

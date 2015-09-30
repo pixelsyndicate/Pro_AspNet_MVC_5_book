@@ -1,7 +1,15 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SportsStore.Domain.Entities;
+using System.Linq;
+
+
+using Moq;
+using SportsStore.Domain.Abstract;
+
+using SportsStore.WebUI.Controllers;
+using System.Web.Mvc;
+using SportsStore.WebUI.Models;
 
 namespace SportsStore.UnitTests
 {
@@ -115,6 +123,74 @@ namespace SportsStore.UnitTests
 
             // Assert
             Assert.AreEqual(target.Lines.Count(), 0);
+        }
+
+
+        [TestMethod]
+        public void Can_Add_To_Cart()
+        {
+            // arrange - create mock repository (not create collection classes)
+            // Product p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product { ProductID = 1, Name = "P1", Category = "Apples"}
+            }.AsQueryable());
+            mock.Setup(m => m.GetProduct(1)).Returns(new Product { ProductID = 1, Name = "P1", Category = "Apples" }
+                );
+
+            // arrange - create a new cart
+            Cart cart = new Cart();
+
+            // arrange  - create the controller
+            CartController target = new CartController(mock.Object);
+
+            // act - add a product to the cart
+            target.AddToCart(cart, 1, null);
+
+            // Assert
+            Assert.AreEqual(cart.Lines.Count(), 1);
+            Assert.AreEqual(cart.Lines.ToArray()[0].Product.ProductID, 1);
+        }
+
+        [TestMethod]
+        public void Adding_Product_To_Cart_Goes_To_Cart_Screen()
+        {
+            // arrange - create mock repository (not create collection classes)
+            // Product p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] { new Product { ProductID = 1, Name = "P1", Category = "Apples" }, }.AsQueryable());
+
+            // arrange - create a new cart
+            Cart cart = new Cart();
+
+            // arrange  - create the controller
+            CartController target = new CartController(mock.Object);
+
+            // act - add a product to the cart
+            RedirectToRouteResult result = target.AddToCart(cart, 2, "myUrl");
+
+            // assert
+            Assert.AreEqual(result.RouteValues["action"], "Index");
+            Assert.AreEqual(result.RouteValues["returnUrl"], "myUrl");
+        }
+
+        [TestMethod]
+        public void Can_View_Cart_Contents()
+        {
+            // arrange - creat a cart
+            Cart cart = new Cart();
+
+            // arrange create the controller
+            CartController target = new CartController(null);
+
+            // act - call the index action method
+            CartIndexViewModel result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
+
+            // assert
+            Assert.AreSame(result.Cart, cart);
+            Assert.AreEqual(result.ReturnUrl, "myUrl");
         }
 
     }

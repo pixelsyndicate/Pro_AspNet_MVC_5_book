@@ -33,7 +33,7 @@ namespace SportsStore.WebUI.Infrastructure
         {
             // add bindings here
 
-            _kernel.Bind<IProductRepository>().To<EFProductRepository>();
+            _kernel.Bind<IProductRepository>().To<EfProductRepository>();
 
             // mock repo
             //Mock<IProductRepository> mock = new Mock<IProductRepository>();

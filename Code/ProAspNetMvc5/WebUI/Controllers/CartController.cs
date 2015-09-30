@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Entities;
 using SportsStore.WebUI.Models;
@@ -13,35 +14,75 @@ namespace SportsStore.WebUI.Controllers
         {
             _repo = repo;
         }
-        public ActionResult Index(string returnurl)
+
+
+
+        public ViewResult Index(Cart cart, string returnUrl)
         {
-            return View(new CartIndexViewModel
+            return View(new CartIndexViewModel()
             {
-                Cart = GetCart(),
-                ReturnUrl = returnurl
+                Cart = cart,
+                ReturnUrl = returnUrl
             });
         }
 
-        public RedirectToRouteResult AddToCart(int productId, string returnUrl)
+        public RedirectToRouteResult AddToCart(Cart cart, int productId, string returnUrl)
         {
             Product product = _repo.GetProduct(productId);
+            //product = _repo.Products.FirstOrDefault(p => p.ProductID == productId);
             if (product != null)
-                GetCart().AddItem(product, 1);
+            {
+                cart.AddItem(product, 1);
+            }
             return RedirectToAction("Index", new { returnUrl });
         }
 
-        public RedirectToRouteResult RemoveFromCart(int productId, string returnUrl)
+        public RedirectToRouteResult RemoveFromCart(Cart cart, int productId, string returnUrl)
         {
             Product product = _repo.GetProduct(productId);
             if (product != null)
-                GetCart().RemoveLine(product);
+            {
+                cart.RemoveLine(product);
+            }
             return RedirectToAction("Index", new { returnUrl });
         }
 
         /// <summary>
-        ///     Keeping the Cart in session
+        /// this older copy uses GetCart() method to handle session. That's now handled by a custom model binder in Infrastructure/binders/
         /// </summary>
-        /// <returns></returns>
+        //public RedirectToRouteResult AddToCart(int productId, string returnUrl)
+        //{
+        //    Product product = _repo.GetProduct(productId);
+        //    if (product != null)
+        //        GetCart().AddItem(product, 1);
+        //    return RedirectToAction("Index", new { returnUrl });
+        //}
+        /// <summary>
+        /// this older copy uses GetCart() method to handle session. That's now handled by a custom model binder in Infrastructure/binders/
+        /// </summary>
+        //public RedirectToRouteResult RemoveFromCart(int productId, string returnUrl)
+        //{
+        //    Product product = _repo.GetProduct(productId);
+        //    if (product != null)
+        //        GetCart().RemoveLine(product);
+        //    return RedirectToAction("Index", new { returnUrl });
+        //}
+        /// <summary>
+        /// this older copy uses GetCart() method to handle session. That's now handled by a custom model binder in Infrastructure/binders/
+        /// </summary>
+        //public ActionResult Index(string returnurl)
+        //{
+        //    return View(new CartIndexViewModel
+        //    {
+        //        Cart = GetCart(),
+        //        ReturnUrl = returnurl
+        //    });
+        //}
+        /// <summary>
+        ///     Retrieving the Cart in (Cart)Session["cart"] 
+        ///     ... this can be make obsolete if I create a custom ModelBinder (CartModelBinder.cs)
+        /// </summary>
+
         private Cart GetCart()
         {
             Cart cart = (Cart)Session["cart"];
