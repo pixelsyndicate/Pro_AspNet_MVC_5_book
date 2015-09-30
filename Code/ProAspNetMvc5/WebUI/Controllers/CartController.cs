@@ -47,6 +47,12 @@ namespace SportsStore.WebUI.Controllers
             return RedirectToAction("Index", new { returnUrl });
         }
 
+        // something to allow the user to see a summary of the current cart contents
+        public PartialViewResult Summary(Cart cart)
+        {
+            return PartialView(cart);
+        }
+
         /// <summary>
         /// this older copy uses GetCart() method to handle session. That's now handled by a custom model binder in Infrastructure/binders/
         /// </summary>
@@ -93,5 +99,9 @@ namespace SportsStore.WebUI.Controllers
         }
 
 
+        public ViewResult Checkout()
+        {
+            return View(new ShippingDetails());
+        }
     }
 }

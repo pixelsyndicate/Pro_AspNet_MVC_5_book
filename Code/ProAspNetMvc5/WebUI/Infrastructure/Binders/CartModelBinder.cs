@@ -11,6 +11,13 @@ namespace SportsStore.WebUI.Infrastructure.Binders
     {
         private const string SessionKey = "Cart";
 
+        /// <summary>
+        /// This returns a CART object from out of session. This way I don't have to pass it in as a parameter in methods. 
+        /// I just have to declare it IS a parameter. Kinda like Dependency Injection 
+        /// </summary>
+        /// <param name="controllerContext"></param>
+        /// <param name="bindingContext"></param>
+        /// <returns></returns>
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             // get the cart from session
