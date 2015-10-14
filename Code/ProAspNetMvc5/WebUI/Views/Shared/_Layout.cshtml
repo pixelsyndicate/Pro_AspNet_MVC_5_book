@@ -3,17 +3,30 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" type="text/css" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <style>
+        /* this enforces some padding and right-fload of the cart.summary even when small.*/
+        .navbar-right {
+            float: right !important;
+            margin-right: 15px;
+            margin-left: 15px;
+        }
+    </style>
 </head>
 <body>
 
     <div class="navbar navbar-inverse" role="navigation">
+        <a href="#" class="navbar-brand">
+            <span class="hidden-xs">SPORTS STORE</span>
+            <span class="visible-xs" style="margin-top: -12px;">SPORTS</span><span class="visible-xs">STORE</span>
 
-        <a href="#" class="navbar-brand">SPORTS STORE</a>
+        </a>
         <div class="container">
             @Html.Action("Summary", "Cart")<div class="container">
             </div>
