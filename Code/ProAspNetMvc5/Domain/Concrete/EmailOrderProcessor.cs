@@ -8,7 +8,7 @@ namespace SportsStore.Domain.Concrete
 {
     public class EmailSettings
     {
-        public string FileLocation = @"E:\GitHub-Personal\source\repo\Pro_AspNet_MVC_5_book\sports_store_emails";
+        public string FileLocation = @"E:\GitHub-Personal\source\repo\Pro_AspNet_MVC_5_book\Code\sports_store_emails";
         public string MailFromAddress = "sportsstore@example.com";
         public string MailToAddress = "orders@example.com";
         public string Password = "MySmtpPassword";
