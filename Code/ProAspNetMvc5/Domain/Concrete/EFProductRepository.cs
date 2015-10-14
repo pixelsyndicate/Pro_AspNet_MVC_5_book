@@ -8,7 +8,11 @@ namespace SportsStore.Domain.Concrete
     public class EfProductRepository : IProductRepository
     {
         private readonly EFDbContext _context = new EFDbContext();
-        public IEnumerable<Product> Products { get { return _context.Products; } }
+
+        public IEnumerable<Product> Products
+        {
+            get { return _context.Products; }
+        }
 
         public Product GetProduct(int productid)
         {

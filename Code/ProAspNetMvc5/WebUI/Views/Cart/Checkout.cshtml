@@ -20,6 +20,7 @@
     @*do this with FAR less code. auto-generate!*@
     foreach (var property in ViewData.ModelMetadata.Properties)
     {
+        // to NOT auto-generate an input form element, use if() to filter those out
         if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap")
         {
             <div class="form-group">
@@ -29,6 +30,23 @@
         }
     }
 
+
+    <hr />
+    <h3>Options</h3>
+    <div class="form-group">
+        @Html.LabelFor(model => model.GiftWrap, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.GiftWrap) Gift wrap these items
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Complete order" class="btn btn-primary" />
+        </div>
+    </div>
 
 
     @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -87,22 +105,4 @@
                 @Html.ValidationMessageFor(model => model.Country, "", new {@class = "text-danger"})
             </div>
         </div>*@
-
-
-    <hr />
-    <h3>Options</h3>
-    <div class="form-group">
-        @Html.LabelFor(model => model.GiftWrap, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.GiftWrap) Gift wrap these items
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Complete order" class="btn btn-primary" />
-        </div>
-    </div>
 }

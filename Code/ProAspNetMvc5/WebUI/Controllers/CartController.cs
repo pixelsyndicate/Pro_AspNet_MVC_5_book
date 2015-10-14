@@ -9,14 +9,40 @@ namespace SportsStore.WebUI.Controllers
     public class CartController : Controller
     {
         private readonly IProductRepository _repo;
+        private IOrderProcessor _proc;
 
-        public CartController(IProductRepository repo)
+        public CartController(IProductRepository repo, IOrderProcessor proc)
         {
             _repo = repo;
+            _proc = proc;
         }
 
+        /// <summary>
+        /// if the cart has line items, pass it to the order processor. else add a validation error and go back to the shipping details page
+        /// </summary>
+        /// <param name="cart">this is handled by the CartModelBinder : IModelBinder which gets the cart from session</param>
+        /// <param name="shippingDetails">this is returned by the form fields in the Checkout.cshtml</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ViewResult CheckOut(Cart cart, ShippingDetails shippingDetails)
+        {
+            if (!cart.Lines.Any())
+            {
+                ModelState.AddModelError("", "Sorry, your cart is empty!");
+            }
 
+            if (ModelState.IsValid)
+            {
+                _proc.ProcessOrder(cart, shippingDetails);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View(shippingDetails);
+            }
 
+        }
         public ViewResult Index(Cart cart, string returnUrl)
         {
             return View(new CartIndexViewModel()
@@ -89,19 +115,21 @@ namespace SportsStore.WebUI.Controllers
         ///     ... this can be make obsolete if I create a custom ModelBinder (CartModelBinder.cs)
         /// </summary>
 
-        private Cart GetCart()
-        {
-            Cart cart = (Cart)Session["cart"];
-            if (cart != null) return cart;
-            cart = new Cart();
-            Session["cart"] = cart;
-            return cart;
-        }
+        //private Cart GetCart()
+        //{
+        //    Cart cart = (Cart)Session["cart"];
+        //    if (cart != null) return cart;
+        //    cart = new Cart();
+        //    Session["cart"] = cart;
+        //    return cart;
+        //}
 
 
-        public ViewResult Checkout()
-        {
-            return View(new ShippingDetails());
-        }
+        //public ViewResult Checkout()
+        //{
+        //    return View(new ShippingDetails());
+        //}
+
+
     }
 }
