@@ -32,6 +32,7 @@
         </div>
     </div>
     <div class="visible-xs">
+        @*call NavController.Menu() method, and pass in bool value if we need it to be a different layout*@
         @Html.Action("Menu", "Nav", new { horizontalLayout = true })
     </div>
     <div class="row panel">
