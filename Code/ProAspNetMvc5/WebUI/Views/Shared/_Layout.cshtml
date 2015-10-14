@@ -25,27 +25,22 @@
         <a href="#" class="navbar-brand">
             <span class="hidden-xs">SPORTS STORE</span>
             <span class="visible-xs" style="margin-top: -12px;">SPORTS</span><span class="visible-xs">STORE</span>
-
         </a>
         <div class="container">
             @Html.Action("Summary", "Cart")<div class="container">
             </div>
         </div>
     </div>
-
-
+    <div class="visible-xs">
+        @Html.Action("Menu", "Nav", new { horizontalLayout = true })
+    </div>
     <div class="row panel">
-        <div id="categories" class="col-xs-3">
+        <div id="categories" class="col-sm-3 hidden-xs">
             @Html.Action("Menu", "Nav")
         </div>
-        <div class="col-xs-8">
+        <div class="col-xs-12 col-sm-8">
             @RenderBody()
         </div>
-
-        @*<hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>*@
     </div>
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
