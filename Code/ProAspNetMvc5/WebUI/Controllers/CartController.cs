@@ -43,6 +43,16 @@ namespace SportsStore.WebUI.Controllers
             }
 
         }
+
+        /// <summary>
+        /// this provides a blank shipping details form.
+        /// </summary>
+        /// <returns></returns>
+        public ViewResult Checkout()
+        {
+            return View(new ShippingDetails());
+        }
+
         public ViewResult Index(Cart cart, string returnUrl)
         {
             return View(new CartIndexViewModel()
