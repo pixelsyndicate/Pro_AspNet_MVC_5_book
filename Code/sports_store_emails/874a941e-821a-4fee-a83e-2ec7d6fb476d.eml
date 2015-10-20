@@ -1,0 +1,14 @@
+X-Sender: sportsstore@example.com
+X-Receiver: orders@example.com
+MIME-Version: 1.0
+From: sportsstore@example.com
+To: orders@example.com
+Date: 14 Oct 2015 10:43:10 -0500
+Subject: New order submitted!
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+
+A new order has been submitted=0D=0A---=0D=0AItems: =0D=0A1 x Lif=
+ejacket (subtotal: $48.95Total order value: $48.95---=0D=0AShip t=
+o:=0D=0Aasdf=0D=0Aasdf=0D=0A=0D=0A=0D=0Aasdf=0D=0Aasdf=0D=0Aasdf=0D=0A=
+---=0D=0AGift wrap: No

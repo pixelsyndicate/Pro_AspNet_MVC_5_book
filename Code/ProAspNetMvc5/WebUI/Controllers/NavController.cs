@@ -1,43 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 
 namespace SportsStore.WebUI.Controllers
 {
     /// <summary>
-    /// I will use Html.Action to inject action returns into the View
+    ///     I will use Html.Action to inject action returns into the View
     /// </summary>
     public class NavController : Controller
     {
-
-        private IProductRepository _repo;
+        private readonly IProductRepository _repo;
 
         public NavController(IProductRepository repo)
         {
             _repo = repo;
         }
 
+        // rather than having two possible views for category nav, i will display a dynamic one
         public PartialViewResult Menu(string category = null)
         {
-            // rather than hold the list of categories and the currently selected category in my viewmodel, i'm gonna cheat a bit and put it into a viewbag
             ViewBag.SelectedCategory = category;
 
-            IEnumerable<string> categories = _repo.Products.Select(p => p.Category).Distinct().OrderBy(x => x);
+            IEnumerable<string> categories = _repo.Products
+                .Select(x => x.Category)
+                .Distinct()
+                .OrderBy(x => x);
 
-            // returning a partialview passes the model to a template PartialView.
-            return PartialView(categories);
+            return PartialView("FlexMenu", categories);
         }
 
-        /// <summary>
-        /// this is called a 'Child Action' - will be used on all pages.
-        /// </summary>
-        /// <returns></returns>
-        //public string Menu()
+        //public PartialViewResult Menu(string category = null, bool horizontalLayout = false)
         //{
-        //    return "Hello from NavController";
+        //    // rather than hold the list of categories and the currently selected category in my viewmodel, i'm gonna cheat a bit and put it into a viewbag
+        //    ViewBag.SelectedCategory = category;
+
+        //    IEnumerable<string> categories = _repo.Products.Select(p => p.Category).Distinct().OrderBy(x => x);
+
+        //    // added to support different menu for small browsers
+        //    string viewName = horizontalLayout ? "MenuHorizontal" : "Menu";
+        //    return PartialView(viewName, categories);
+
+
+        //    // returning a partialview passes the model to a template PartialView.
+        //    // return PartialView(categories);
+
         //}
     }
 }

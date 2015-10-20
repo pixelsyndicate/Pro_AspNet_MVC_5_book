@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web.Mvc;
 using Ninject;
 using Moq;
@@ -34,6 +35,15 @@ namespace SportsStore.WebUI.Infrastructure
             // add bindings here
 
             _kernel.Bind<IProductRepository>().To<EfProductRepository>();
+
+            EmailSettings emailSettings = new EmailSettings
+            {
+                WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false")
+            };
+
+            // pass the webconfig value to the constructor of the emailorderprocessor
+            _kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>().WithConstructorArgument("settings", emailSettings);
+
 
             // mock repo
             //Mock<IProductRepository> mock = new Mock<IProductRepository>();

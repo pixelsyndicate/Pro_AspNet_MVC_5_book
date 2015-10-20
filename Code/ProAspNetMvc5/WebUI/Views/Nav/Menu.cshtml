@@ -1,7 +1,7 @@
-﻿@model System.Collections.Generic.IEnumerable<string>
+﻿@model IEnumerable<string>
 
 @Html.ActionLink("Home", "List", "Product", null,
-            new { @class = "list-group-item" + (ViewBag.SelectedCategory != null ? "" : " active") })
+    new { @class = "list-group-item" + (ViewBag.SelectedCategory != null ? "" : " active") })
 
 @foreach (var link in Model)
 {
@@ -12,5 +12,9 @@
         category = link,
         page = 1
     },
-    new { @class = "list-group-item" + (link == ViewBag.SelectedCategory ? " active" : "") })
+        new
+        {
+            @class = "list-group-item"
+                + (link == ViewBag.SelectedCategory ? " active" : "")
+        })
 }
