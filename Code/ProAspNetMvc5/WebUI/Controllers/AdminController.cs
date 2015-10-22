@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
+using SportsStore.Domain.Entities;
 
 namespace SportsStore.WebUI.Controllers
 {
@@ -23,6 +24,12 @@ namespace SportsStore.WebUI.Controllers
             return View(_repo.Products);
         }
 
-       
+
+        public ViewResult Edit(int productid)
+        {
+            // get the latest from the db
+            Product product = _repo.Products.FirstOrDefault(p => p.ProductID == productid);
+            return View(product);
+        }
     }
 }
