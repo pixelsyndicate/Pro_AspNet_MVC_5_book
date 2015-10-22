@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SportsStore.Domain.Abstract;
@@ -12,6 +13,52 @@ namespace SportsStore.UnitTests
     [TestClass]
     public class AdminTests
     {
+
+
+        [TestMethod]
+        public void Can_Save_Valid_Changes()
+        {
+            // Arrange - Set up what i'm going to work with
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            // Arrange - Set up what i'm going to work with
+            AdminController target = new AdminController(mock.Object);
+            // Arrange - Set up what i'm going to work with
+            Product product = new Product {Name = "Test"};
+
+            // Act - Do the Stuff
+            ActionResult result = target.Edit(product);
+
+            // Assert - Validate it worked
+            // verify the mock calld the following method
+            mock.Verify(m => m.SaveProduct(product));
+            // check for the instance of the result type (if successful, what should be returned is a RedirectToRoute result)
+            Assert.IsNotInstanceOfType(result,typeof(ViewResult));
+
+        }
+
+        [TestMethod]
+        public void Cannot_Save_Invalid_Changes()
+        {
+            // Arrange - Set up what i'm going to work with
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            // Arrange - Set up the controller i'm going to call
+            AdminController target = new AdminController(mock.Object);
+            // Arrange - Set up what i'm going to work with
+            Product product = new Product { Name = "Test" };
+            // Arrange - add an error to the model state, as if there was a failure in finding an existing object
+            target.ModelState.AddModelError("error","error");
+
+            // Act - Do the Stuff
+            ActionResult result = target.Edit(product);
+
+            // Assert - Validate it worked
+            // verify the mock didn't call the following method - in this case, it doesn't matter what product is sent, because there's a modelstate error
+            mock.Verify(m => m.SaveProduct(It.IsAny<Product>()), Times.Never);
+            // check for the instance of the result type (if unsuccessful, what should be returned is a ViewResult result)
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+
         [TestMethod]
         public void Index_Contains_All_Products()
         {
@@ -88,5 +135,7 @@ namespace SportsStore.UnitTests
 
 
         }
+
+
     }
 }

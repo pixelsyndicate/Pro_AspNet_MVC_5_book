@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Entities;
@@ -10,8 +7,7 @@ namespace SportsStore.WebUI.Controllers
 {
     public class AdminController : Controller
     {
-
-        private IProductRepository _repo;
+        private readonly IProductRepository _repo;
 
         public AdminController(IProductRepository repo)
         {
@@ -24,7 +20,6 @@ namespace SportsStore.WebUI.Controllers
             return View(_repo.Products);
         }
 
-
         public ViewResult Edit(int productid)
         {
             // get the latest from the db
@@ -35,17 +30,14 @@ namespace SportsStore.WebUI.Controllers
         [HttpPost]
         public ActionResult Edit(Product product)
         {
-            if (ModelState.IsValid)
-            {
-                _repo.SaveProduct(product);
-                TempData["message"] = string.Format("{0} has been saved", product.Name);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                // there's somethign wrong
-                return View(product);
-            }
+            // there's somethign wrong?
+            if (!ModelState.IsValid) return View(product);
+
+            // nope. move along
+            _repo.SaveProduct(product);
+            TempData["message"] = string.Format("{0} has been saved", product.Name);
+            return RedirectToAction("Index");
+
         }
     }
 }
