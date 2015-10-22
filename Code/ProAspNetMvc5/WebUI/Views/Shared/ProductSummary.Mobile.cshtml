@@ -11,11 +11,9 @@
         <div class="ui-block-c">
             @using (Html.BeginForm("AddToCart", "Cart"))
             {
-
                 @Html.HiddenFor(x => x.ProductID)
                 @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
                 <input type="submit" data-inline="true" data-mini="true" value="Add to cart" />
-
             }
         </div>
     </div>
