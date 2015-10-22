@@ -12,7 +12,7 @@
     @using (Html.BeginForm())
     {
         <div class="panel-body">
-           <!-- do not display the id for the item -->
+            <!-- do not display the id for the item -->
             @Html.HiddenFor(m => m.ProductID)
             <!-- auto-generate the fields needed -->
             @foreach (var property in ViewData.ModelMetadata.Properties)
@@ -24,16 +24,14 @@
                         <label> @(property.DisplayName ?? property.PropertyName)</label>
                         <!-- make input type changes where needed  -->
                         @(property.PropertyName == "Description" ?
-                              Html.TextArea(property.PropertyName, null, new {@class = "form-control", rows = 5}) :
-                              Html.TextBox(property.PropertyName, null, new {@class = "form-control"}))
+                              Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 }) :
+                              Html.TextBox(property.PropertyName, null, new { @class = "form-control" }))
                     </div>
                 }
             }
+        </div><div class="panel-footer">
+            <input type="submit" class="btn btn-primary" value="Save" />
+            @Html.ActionLink("Cancel and return to List", "Index", null, new { @class = "btn btn-default" })
         </div>
     }
-    <div class="panel-footer">
-        <input type="submit" class="btn btn-primary" value="Save" />
-        @Html.ActionLink("Cancel and return to List", "Index", null, new {@class="btn btn-default"})
-    </div>
 </div>
-

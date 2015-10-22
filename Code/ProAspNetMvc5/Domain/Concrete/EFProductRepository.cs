@@ -18,5 +18,25 @@ namespace SportsStore.Domain.Concrete
         {
             return _context.Products.FirstOrDefault(p => p.ProductID == productid);
         }
+
+        public void SaveProduct(Product product)
+        {
+            // if its new, add it.
+            if (product.ProductID == 0)
+                _context.Products.Add(product);
+            else
+            {
+                // check to see if it really exists
+                Product dbEntry = _context.Products.Find(product.ProductID);
+                if (dbEntry != null)
+                {
+                    dbEntry.Name = product.Name;
+                    dbEntry.Description = product.Description;
+                    dbEntry.Price = product.Price;
+                    dbEntry.Category = product.Category;
+                }
+            }
+            _context.SaveChanges();
+        }
     }
 }
