@@ -5,6 +5,8 @@ using SportsStore.Domain.Entities;
 
 namespace SportsStore.WebUI.Controllers
 {
+    // Authorize filter enforces access to the methods of the controller work for all authenticated users.
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IProductRepository _repo;
