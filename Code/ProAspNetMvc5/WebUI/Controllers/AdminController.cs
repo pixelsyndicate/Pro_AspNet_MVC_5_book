@@ -39,5 +39,23 @@ namespace SportsStore.WebUI.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public ViewResult Create()
+        {
+            // use the edit form, as it does the same as a new form. 
+            // but pass along an empty model so it's got blank entries.
+            return View("Edit", new Product());
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int productId)
+        {
+            Product deletedProduct = _repo.DeleteProduct(productId);
+            if (deletedProduct != null)
+            {
+                TempData["message"] = string.Format("{0} was deleted", deletedProduct.Name);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

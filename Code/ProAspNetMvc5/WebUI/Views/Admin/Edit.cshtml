@@ -9,7 +9,7 @@
     <div class="panel-heading">
         <h3>Edit @Model.Name</h3>
     </div>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit","Admin"))
     {
         <div class="panel-body">
             <!-- do not display the id for the item -->
@@ -22,11 +22,13 @@
                 {
                     <div class="form-group">
                         <label> @(property.DisplayName ?? property.PropertyName)</label>
-                        <!-- make input type changes where needed  -->
+                        <!-- make input type changes where needed -->
                         @(property.PropertyName == "Description" ?
-                              Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 }) :
-                              Html.TextBox(property.PropertyName, null, new { @class = "form-control" }))
+                              Html.TextArea(property.PropertyName, null, new {@class = "form-control", rows = 5}) :
+                              Html.TextBox(property.PropertyName, null, new {@class = "form-control"}))
+                        @Html.ValidationMessage(property.PropertyName)
                     </div>
+                
                 }
             }
         </div><div class="panel-footer">
@@ -35,3 +37,5 @@
         </div>
     }
 </div>
+
+

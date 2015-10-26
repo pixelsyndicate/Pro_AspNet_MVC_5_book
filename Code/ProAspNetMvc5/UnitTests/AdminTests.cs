@@ -23,7 +23,7 @@ namespace SportsStore.UnitTests
             // Arrange - Set up what i'm going to work with
             AdminController target = new AdminController(mock.Object);
             // Arrange - Set up what i'm going to work with
-            Product product = new Product {Name = "Test"};
+            Product product = new Product { Name = "Test" };
 
             // Act - Do the Stuff
             ActionResult result = target.Edit(product);
@@ -32,7 +32,7 @@ namespace SportsStore.UnitTests
             // verify the mock calld the following method
             mock.Verify(m => m.SaveProduct(product));
             // check for the instance of the result type (if successful, what should be returned is a RedirectToRoute result)
-            Assert.IsNotInstanceOfType(result,typeof(ViewResult));
+            Assert.IsNotInstanceOfType(result, typeof(ViewResult));
 
         }
 
@@ -46,7 +46,7 @@ namespace SportsStore.UnitTests
             // Arrange - Set up what i'm going to work with
             Product product = new Product { Name = "Test" };
             // Arrange - add an error to the model state, as if there was a failure in finding an existing object
-            target.ModelState.AddModelError("error","error");
+            target.ModelState.AddModelError("error", "error");
 
             // Act - Do the Stuff
             ActionResult result = target.Edit(product);
@@ -75,7 +75,7 @@ namespace SportsStore.UnitTests
 
             // action
             // example of what worked elsewhere - (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
-          
+
             Product[] results = ((IEnumerable<Product>)target.Index().ViewData.Model).ToArray();
 
             // Assert
@@ -127,8 +127,8 @@ namespace SportsStore.UnitTests
             // arrange - create a controller
             AdminController target = new AdminController(mock.Object);
 
-           // act
-            Product result = (Product) target.Edit(4).ViewData.Model;
+            // act
+            Product result = (Product)target.Edit(4).ViewData.Model;
 
             // assert
             Assert.IsNull(result);
@@ -136,6 +136,27 @@ namespace SportsStore.UnitTests
 
         }
 
+        [TestMethod]
+        public void Can_Delete_Valid_Products()
+        {
+            // arrange - create a product
+            Product prod = new Product { ProductID = 2, Name = "Test" };
 
+            // arrange - create the mock repo
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] {
+                new Product{ProductID = 1, Name = "P1"}, 
+                new Product {ProductID = 3, Name = "P3"}
+            });
+
+            // Arrange - Set up what i'm going to work with
+            AdminController target = new AdminController(mock.Object);
+
+            // act - delete the product
+            target.Delete(prod.ProductID);
+
+            // assert - ensure the repo delete was called with the correct product
+            mock.Verify(m => m.DeleteProduct(prod.ProductID));
+        }
     }
 }
