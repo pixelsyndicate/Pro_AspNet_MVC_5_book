@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Entities;
@@ -29,17 +30,48 @@ namespace SportsStore.WebUI.Controllers
             return View(product);
         }
 
+        //[HttpPost]
+        //public ActionResult Edit(Product product)
+        //{
+        //    // there's somethign wrong?
+        //    if (!ModelState.IsValid) return View(product);
+
+        //    // nope. move along
+        //    _repo.SaveProduct(product);
+        //    TempData["message"] = string.Format("{0} has been saved", product.Name);
+        //    return RedirectToAction("Index");
+
+        //}
+
+        /// <summary>
+        /// this overloaded Edit is used in conjuction with a posted image binary 
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="image"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(Product product, HttpPostedFileBase image = null)
         {
-            // there's somethign wrong?
-            if (!ModelState.IsValid) return View(product);
-
-            // nope. move along
-            _repo.SaveProduct(product);
-            TempData["message"] = string.Format("{0} has been saved", product.Name);
-            return RedirectToAction("Index");
-
+            if (ModelState.IsValid)
+            {
+                if (image != null)
+                {
+                    // assign the mimetype
+                    product.ImageMimeType = image.ContentType;
+                    // make space for the image data
+                    product.ImageData = new byte[image.ContentLength];
+                    // read the input stream from start to finish
+                    image.InputStream.Read(product.ImageData, 0, image.ContentLength);
+                }
+                _repo.SaveProduct(product);
+                TempData["message"] = string.Format("{0} has been saved", product.Name);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // there is something wrong with the data values
+                return View(product);
+            }
         }
 
         public ViewResult Create()

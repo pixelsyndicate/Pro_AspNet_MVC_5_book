@@ -109,6 +109,7 @@
     <Compile Include="CartTests.cs" />
     <Compile Include="AdminTests.cs" />
     <Compile Include="UnitTest2.cs" />
+    <Compile Include="UnitTest3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
